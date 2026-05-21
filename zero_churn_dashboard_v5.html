@@ -29,736 +29,247 @@
       --green-50:  #ecfdf3;
       --green-700: #027a48;
       --green-200: #a9ef9c;
+      --purple-50: #faf5ff;
+      --purple-700:#6d28d9;
+      --purple-200:#ddd6fe;
       --shadow-xs: 0 1px 2px rgba(16,24,40,.05);
       --shadow-sm: 0 1px 3px rgba(16,24,40,.1), 0 1px 2px rgba(16,24,40,.06);
       --shadow-md: 0 4px 8px -2px rgba(16,24,40,.1), 0 2px 4px -2px rgba(16,24,40,.06);
       --shadow-lg: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03);
-      --r-sm: 6px;
-      --r-md: 8px;
-      --r-lg: 12px;
-      --r-xl: 16px;
-      --r-full: 9999px;
+      --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px; --r-full: 9999px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-    body {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text-1);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 32px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      box-shadow: var(--shadow-xs);
-    }
-
+    /* HEADER */
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; box-shadow: var(--shadow-xs); }
     .header-left { display: flex; align-items: center; gap: 12px; }
-
-    .logo-mark {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--brand), #1e40af);
-      border-radius: var(--r-md);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 1px 3px rgba(37,99,235,.3);
-    }
-
+    .logo-mark { width: 36px; height: 36px; background: linear-gradient(135deg, var(--brand), #1e40af); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 1px 3px rgba(37,99,235,.3); }
     .logo-text { font-size: 15px; font-weight: 600; color: var(--text-1); letter-spacing: -.01em; }
     .logo-sub  { font-size: 12px; color: var(--text-4); margin-top: 1px; }
-
     .header-right { display: flex; align-items: center; gap: 10px; }
+    .ai-pill { display: flex; align-items: center; gap: 6px; background: var(--brand-50); border: 1px solid var(--brand-100); border-radius: var(--r-full); padding: 5px 12px; font-size: 12px; font-weight: 500; color: var(--brand); }
+    .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }
+    .tenant-pill { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px solid var(--border); border-radius: var(--r-full); font-size: 12px; font-weight: 500; color: var(--text-3); background: var(--surface); }
+    .tenant-avatar { width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; font-weight: 700; }
 
-    .ai-pill {
-      display: flex; align-items: center; gap: 6px;
-      background: var(--brand-50);
-      border: 1px solid var(--brand-100);
-      border-radius: var(--r-full);
-      padding: 5px 12px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--brand);
-    }
+    /* NAV TABS */
+    .nav-tabs { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 32px; display: flex; gap: 0; }
+    .nav-tab { padding: 14px 20px; font-size: 14px; font-weight: 500; color: var(--text-4); cursor: pointer; border: none; background: transparent; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; font-family: inherit; display: flex; align-items: center; gap: 7px; }
+    .nav-tab:hover { color: var(--text-1); }
+    .nav-tab.active { color: var(--brand); border-bottom-color: var(--brand); }
 
-    .pulse {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--brand);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: .5; transform: scale(.85); }
-    }
-
-    .tenant-pill {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--r-full);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-3);
-      background: var(--surface);
-    }
-
-    .tenant-avatar {
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; color: #fff; font-weight: 700;
-    }
-
-    /* ── MAIN LAYOUT ── */
+    /* PAGE */
     .page { max-width: 1400px; margin: 0 auto; padding: 28px 32px 60px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
-    /* ── PAGE TITLE ── */
+    /* PAGE TITLE */
     .page-title { margin-bottom: 24px; }
     .page-title h2 { font-size: 20px; font-weight: 600; color: var(--text-1); letter-spacing: -.02em; }
     .page-title p  { font-size: 14px; color: var(--text-4); margin-top: 2px; }
 
-    /* ── METRICS GRID ── */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .metric-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 20px;
-      box-shadow: var(--shadow-xs);
-      transition: box-shadow .15s, transform .15s;
-    }
-
+    /* METRICS GRID */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow-xs); transition: box-shadow .15s, transform .15s; }
     .metric-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
-
-    .metric-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-4);
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      margin-bottom: 8px;
-      display: flex; align-items: center; gap: 5px;
-    }
-
-    .metric-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text-1);
-      letter-spacing: -.02em;
-      line-height: 1;
-    }
-
+    .metric-label { font-size: 12px; font-weight: 500; color: var(--text-4); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; }
+    .metric-value { font-size: 24px; font-weight: 700; color: var(--text-1); letter-spacing: -.02em; line-height: 1; }
     .metric-card.c-red    .metric-value { color: var(--red-700); }
     .metric-card.c-amber  .metric-value { color: var(--amber-700); }
     .metric-card.c-green  .metric-value { color: var(--green-700); }
     .metric-card.c-blue   .metric-value { color: var(--brand); }
     .metric-card.c-orange .metric-value { color: #c4410c; }
+    .metric-card.c-purple .metric-value { color: var(--purple-700); }
+    .metric-sub { font-size: 12px; color: var(--text-5); margin-top: 4px; }
+    .metric-delta { font-size: 12px; margin-top: 6px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+    .metric-delta.up   { color: var(--green-700); }
+    .metric-delta.down { color: var(--red-700); }
+    .metric-delta.neutral { color: var(--text-5); }
 
-    .metric-sub {
-      font-size: 12px;
-      color: var(--text-5);
-      margin-top: 4px;
-    }
-
-    /* ── DIVIDER ── */
-    .divider { height: 1px; background: var(--border); margin: 0 0 24px; }
-
-    /* ── TABLE CARD ── */
-    .table-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      box-shadow: var(--shadow-xs);
-      overflow: hidden;
-    }
-
-    .table-toolbar {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
+    /* TABLE CARD */
+    .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-xs); overflow: hidden; }
+    .table-toolbar { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--border); }
     .table-toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
     .toolbar-title { font-size: 14px; font-weight: 600; color: var(--text-1); }
-    .toolbar-count {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--r-full);
-      padding: 2px 9px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-3);
-    }
-
-    /* FILTER TABS */
+    .toolbar-count { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-full); padding: 2px 9px; font-size: 12px; font-weight: 600; color: var(--text-3); }
     .filter-tabs { display: flex; gap: 2px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); padding: 3px; }
-
-    .filter-tab {
-      padding: 5px 14px;
-      border-radius: var(--r-sm);
-      border: none;
-      background: transparent;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      cursor: pointer;
-      transition: all .12s;
-      font-family: inherit;
-    }
-
+    .filter-tab { padding: 5px 14px; border-radius: var(--r-sm); border: none; background: transparent; font-size: 13px; font-weight: 500; color: var(--text-3); cursor: pointer; transition: all .12s; font-family: inherit; }
     .filter-tab:hover  { color: var(--text-1); background: var(--surface); }
     .filter-tab.active { background: var(--surface); color: var(--text-1); box-shadow: var(--shadow-xs); }
-
-    /* SORT SELECT */
     .sort-wrap { display: flex; align-items: center; gap: 8px; }
     .sort-label { font-size: 13px; color: var(--text-4); white-space: nowrap; }
-
-    select.sort-select {
-      appearance: none;
-      padding: 7px 32px 7px 12px;
-      background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
-      border: 1px solid var(--border-2);
-      border-radius: var(--r-md);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-2);
-      cursor: pointer;
-      box-shadow: var(--shadow-xs);
-      font-family: inherit;
-    }
-
+    select.sort-select { appearance: none; padding: 7px 32px 7px 12px; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; border: 1px solid var(--border-2); border-radius: var(--r-md); font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer; box-shadow: var(--shadow-xs); font-family: inherit; }
     select.sort-select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
-
-    /* BTN REFRESH */
-    .btn-refresh {
-      display: flex; align-items: center; gap: 6px;
-      padding: 7px 14px;
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      border-radius: var(--r-md);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-2);
-      cursor: pointer;
-      box-shadow: var(--shadow-xs);
-      font-family: inherit;
-      transition: all .12s;
-    }
-
+    .btn-refresh { display: flex; align-items: center; gap: 6px; padding: 7px 14px; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--r-md); font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer; box-shadow: var(--shadow-xs); font-family: inherit; transition: all .12s; }
     .btn-refresh:hover { background: var(--bg); border-color: var(--brand); color: var(--brand); }
 
-    /* AI STATUS BAR */
-    .ai-status-bar {
-      padding: 10px 20px;
-      background: var(--brand-50);
-      border-bottom: 1px solid var(--brand-100);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--brand);
-      font-weight: 500;
-    }
-
-    .spinner-sm {
-      width: 14px; height: 14px;
-      border: 2px solid var(--brand-100);
-      border-top-color: var(--brand);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      flex-shrink: 0;
-    }
-
+    /* AI STATUS */
+    .ai-status-bar { padding: 10px 20px; background: var(--brand-50); border-bottom: 1px solid var(--brand-100); display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--brand); font-weight: 500; }
+    .spinner-sm { width: 14px; height: 14px; border: 2px solid var(--brand-100); border-top-color: var(--brand); border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* TABLE */
     table { width: 100%; border-collapse: collapse; min-width: 700px; }
-
-    thead th {
-      padding: 11px 16px;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-4);
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background .1s;
-    }
-
+    thead th { padding: 11px 16px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-4); text-transform: uppercase; letter-spacing: .05em; background: var(--bg); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: #f9fafb; }
     tbody tr[data-clickable="true"] { cursor: pointer; }
-
     tbody td { padding: 14px 16px; font-size: 14px; vertical-align: middle; }
 
-    /* PRIORITY BADGE */
-    .pri-num {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      font-size: 11px;
-      font-weight: 700;
-      border: 1.5px solid;
-    }
+    /* PRIORITY */
+    .pri-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 700; border: 1.5px solid; }
+    .pri-1 { background: var(--red-50);    color: var(--red-700);    border-color: var(--red-200); }
+    .pri-2 { background: var(--amber-50);  color: var(--amber-700);  border-color: var(--amber-200); }
+    .pri-3 { background: var(--green-50);  color: var(--green-700);  border-color: var(--green-200); }
+    .pri-r { background: var(--purple-50); color: var(--purple-700); border-color: var(--purple-200); }
 
-    .pri-1 { background: var(--red-50);   color: var(--red-700);   border-color: var(--red-200); }
-    .pri-2 { background: var(--amber-50); color: var(--amber-700); border-color: var(--amber-200); }
-    .pri-3 { background: var(--green-50); color: var(--green-700); border-color: var(--green-200); }
-
-    /* CLIENT NAME */
-    .client-name { font-size: 14px; font-weight: 500; color: var(--text-1); }
+    /* CLIENT */
+    .client-name  { font-size: 14px; font-weight: 500; color: var(--text-1); }
     .client-phone { font-size: 13px; color: var(--text-4); margin-top: 1px; }
     .client-meta  { margin-top: 5px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
     /* SCORE */
-    .score-wrap { display: flex; align-items: center; gap: 10px; }
-    .score-num  { font-size: 16px; font-weight: 700; min-width: 28px; }
+    .score-wrap  { display: flex; align-items: center; gap: 10px; }
+    .score-num   { font-size: 16px; font-weight: 700; min-width: 28px; }
     .score-track { width: 52px; height: 4px; border-radius: var(--r-full); background: var(--border); overflow: hidden; }
     .score-fill  { height: 100%; border-radius: var(--r-full); transition: width .4s; }
 
-    /* RISK BADGE */
-    .risk-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 10px;
-      border-radius: var(--r-full);
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .risk-badge.critico  { background: var(--red-50);   color: var(--red-700); }
-    .risk-badge.alerta   { background: var(--amber-50); color: var(--amber-700); }
-    .risk-badge.saudavel { background: var(--green-50); color: var(--green-700); }
+    /* BADGES */
+    .risk-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: var(--r-full); font-size: 12px; font-weight: 600; }
+    .risk-badge.critico        { background: var(--red-50);    color: var(--red-700); }
+    .risk-badge.alerta         { background: var(--amber-50);  color: var(--amber-700); }
+    .risk-badge.saudavel       { background: var(--green-50);  color: var(--green-700); }
+    .risk-badge.retido_semana  { background: var(--purple-50); color: var(--purple-700); }
 
     /* TICKET */
     .ticket-main { font-size: 14px; font-weight: 600; color: var(--text-1); }
-    .ticket-risk { font-size: 12px; color: #c4410c; margin-top: 2px; display: flex; align-items: center; gap: 3px; }
+    .ticket-risk { font-size: 12px; color: #c4410c; margin-top: 2px; }
+    .ticket-saved { font-size: 12px; color: var(--green-700); margin-top: 2px; }
 
     /* MOTIVO TAGS */
     .motivos-wrap { display: flex; gap: 4px; flex-wrap: wrap; }
-
-    .motivo-tag {
-      display: inline-flex; align-items: center;
-      padding: 2px 8px;
-      border-radius: var(--r-sm);
-      font-size: 11px;
-      font-weight: 500;
-      border: 1px solid;
-    }
-
-    .motivo-tag.os     { background: var(--red-50);    color: var(--red-700);   border-color: var(--red-200); }
-    .motivo-tag.boleto { background: var(--amber-50);  color: var(--amber-700); border-color: var(--amber-200); }
+    .motivo-tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: var(--r-sm); font-size: 11px; font-weight: 500; border: 1px solid; }
+    .motivo-tag.os     { background: var(--red-50);   color: var(--red-700);   border-color: var(--red-200); }
+    .motivo-tag.boleto { background: var(--amber-50); color: var(--amber-700); border-color: var(--amber-200); }
     .motivo-tag.fid    { background: #faf5ff; color: #6d28d9; border-color: #ddd6fe; }
     .motivo-tag.atraso { background: #fffbeb; color: #92400e; border-color: #fde68a; }
 
-    /* DESFECHO BADGE */
-    .def-badge {
-      display: inline-flex; align-items: center;
-      padding: 2px 8px;
-      border-radius: var(--r-full);
-      font-size: 11px;
-      font-weight: 500;
-      border: 1px solid;
-    }
-
-    .def-badge.retido      { background: var(--green-50); color: var(--green-700); border-color: var(--green-200); }
-    .def-badge.cancelou    { background: var(--red-50);   color: var(--red-700);   border-color: var(--red-200); }
-    .def-badge.nao_atendeu { background: var(--brand-50); color: var(--brand);     border-color: var(--brand-100); }
-    .def-badge.pendente    { background: var(--bg);       color: var(--text-4);    border-color: var(--border); }
+    /* DEF BADGE */
+    .def-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: var(--r-full); font-size: 11px; font-weight: 500; border: 1px solid; }
+    .def-badge.retido      { background: var(--green-50);  color: var(--green-700);  border-color: var(--green-200); }
+    .def-badge.cancelou    { background: var(--red-50);    color: var(--red-700);    border-color: var(--red-200); }
+    .def-badge.nao_atendeu { background: var(--brand-50);  color: var(--brand);      border-color: var(--brand-100); }
+    .def-badge.pendente    { background: var(--bg);        color: var(--text-4);     border-color: var(--border); }
 
     /* AI INDICATOR */
-    .ai-indicator {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 11px; font-weight: 500;
-    }
-
+    .ai-indicator { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; }
     .ai-indicator.ready   { color: var(--brand); }
     .ai-indicator.loading { color: var(--text-5); }
-
-    .ai-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--brand);
-    }
+    .ai-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
 
     /* ACTION BUTTONS */
     .action-col { display: flex; align-items: center; gap: 6px; }
-
-    .btn-wa {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 7px 12px;
-      background: #16a34a;
-      color: #fff;
-      border: none;
-      border-radius: var(--r-md);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      text-decoration: none;
-      transition: background .12s;
-      white-space: nowrap;
-      box-shadow: var(--shadow-xs);
-    }
-
+    .btn-wa { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; background: #16a34a; color: #fff; border: none; border-radius: var(--r-md); font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; text-decoration: none; transition: background .12s; white-space: nowrap; box-shadow: var(--shadow-xs); }
     .btn-wa:hover { background: #15803d; }
-
-    .btn-desfecho {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 7px 10px;
-      background: var(--surface);
-      color: var(--text-2);
-      border: 1px solid var(--border-2);
-      border-radius: var(--r-md);
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all .12s;
-      box-shadow: var(--shadow-xs);
-    }
-
+    .btn-desfecho { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; background: var(--surface); color: var(--text-2); border: 1px solid var(--border-2); border-radius: var(--r-md); font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all .12s; box-shadow: var(--shadow-xs); }
     .btn-desfecho:hover { background: var(--bg); border-color: var(--brand); color: var(--brand); }
 
-    /* LOADING / EMPTY */
-    .state-box {
-      padding: 64px 24px;
-      text-align: center;
-      color: var(--text-4);
-    }
-
+    /* STATE BOXES */
+    .state-box { padding: 64px 24px; text-align: center; color: var(--text-4); }
     .state-box .icon { font-size: 32px; margin-bottom: 12px; }
     .state-box p { font-size: 14px; font-weight: 500; }
     .state-box span { font-size: 13px; color: var(--text-5); margin-top: 4px; display: block; }
+    .spinner-lg { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--brand); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 16px; }
 
-    .spinner-lg {
-      width: 32px; height: 32px;
-      border: 3px solid var(--border);
-      border-top-color: var(--brand);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin: 0 auto 16px;
-    }
+    /* ── RELATÓRIO SEMANAL ── */
+    .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
 
-    /* ════════════════════════════════════
-       PAINEL LATERAL — mantém dark theme
-       como contraste intencional
-    ════════════════════════════════════ */
-    .painel-overlay {
-      position: fixed; inset: 0;
-      background: rgba(16,24,40,.5);
-      backdrop-filter: blur(3px);
-      z-index: 100;
-      display: flex;
-      justify-content: flex-end;
-    }
+    .report-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; box-shadow: var(--shadow-xs); }
+    .report-card-label { font-size: 12px; font-weight: 500; color: var(--text-4); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; }
+    .report-card-value { font-size: 32px; font-weight: 700; color: var(--text-1); letter-spacing: -.03em; line-height: 1; }
+    .report-card.c-green  .report-card-value { color: var(--green-700); }
+    .report-card.c-blue   .report-card-value { color: var(--brand); }
+    .report-card.c-red    .report-card-value { color: var(--red-700); }
+    .report-card.c-amber  .report-card-value { color: var(--amber-700); }
+    .report-card.c-purple .report-card-value { color: var(--purple-700); }
+    .report-card-sub { font-size: 13px; color: var(--text-5); margin-top: 6px; }
+    .report-card-delta { font-size: 13px; font-weight: 600; margin-top: 8px; display: flex; align-items: center; gap: 5px; }
+    .report-card-delta.up   { color: var(--green-700); }
+    .report-card-delta.down { color: var(--red-700); }
+    .report-card-delta.neutral { color: var(--text-5); }
 
-    .painel {
-      background: #0f172a;
-      width: 100%;
-      max-width: 500px;
-      height: 100vh;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      box-shadow: -8px 0 40px rgba(0,0,0,.3);
-      animation: slideIn .2s ease;
-    }
+    .report-section-title { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 
-    @keyframes slideIn {
-      from { transform: translateX(32px); opacity: 0; }
-      to   { transform: translateX(0);    opacity: 1; }
-    }
+    .abordagens-table { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-xs); margin-bottom: 28px; }
 
-    .painel-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid #1e293b;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-    }
+    .funnel-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; box-shadow: var(--shadow-xs); margin-bottom: 28px; }
 
-    .painel-header-info h3  { font-size: 16px; font-weight: 600; color: #f1f5f9; }
-    .painel-header-info p   { font-size: 12px; color: #64748b; margin-top: 3px; }
+    .funnel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .funnel-label { font-size: 13px; font-weight: 500; color: var(--text-2); width: 140px; flex-shrink: 0; }
+    .funnel-bar-wrap { flex: 1; height: 8px; background: var(--bg); border-radius: var(--r-full); overflow: hidden; }
+    .funnel-bar-fill { height: 100%; border-radius: var(--r-full); transition: width .6s; }
+    .funnel-val { font-size: 13px; font-weight: 700; width: 40px; text-align: right; flex-shrink: 0; }
 
-    .btn-close-panel {
-      width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: var(--r-sm);
-      color: #94a3b8;
-      font-size: 14px;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all .12s;
-    }
+    .empty-report { text-align: center; padding: 60px 24px; color: var(--text-4); }
+    .empty-report .icon { font-size: 40px; margin-bottom: 16px; }
+    .empty-report h3 { font-size: 16px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+    .empty-report p  { font-size: 14px; }
 
+    /* PAINEL LATERAL */
+    .painel-overlay { position: fixed; inset: 0; background: rgba(16,24,40,.5); backdrop-filter: blur(3px); z-index: 100; display: flex; justify-content: flex-end; }
+    .painel { background: #0f172a; width: 100%; max-width: 500px; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(0,0,0,.3); animation: slideIn .2s ease; }
+    @keyframes slideIn { from{transform:translateX(32px);opacity:0} to{transform:translateX(0);opacity:1} }
+    .painel-header { padding: 20px 24px; border-bottom: 1px solid #1e293b; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .painel-header-info h3 { font-size: 16px; font-weight: 600; color: #f1f5f9; }
+    .painel-header-info p  { font-size: 12px; color: #64748b; margin-top: 3px; }
+    .btn-close-panel { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: #1e293b; border: 1px solid #334155; border-radius: var(--r-sm); color: #94a3b8; font-size: 14px; cursor: pointer; flex-shrink: 0; transition: all .12s; }
     .btn-close-panel:hover { background: #334155; color: #e2e8f0; }
-
     .painel-body { padding: 20px 24px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
-
-    .panel-section {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: var(--r-lg);
-      padding: 16px;
-    }
-
-    .panel-section-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 8px;
-    }
-
+    .panel-section { background: #1e293b; border: 1px solid #334155; border-radius: var(--r-lg); padding: 16px; }
+    .panel-section-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
     .panel-section p { font-size: 14px; line-height: 1.75; color: #cbd5e1; }
     .panel-section .action-text { font-size: 14px; font-weight: 600; color: #f1f5f9; line-height: 1.6; }
-
-    .urgency-bar {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 16px;
-      border-radius: var(--r-lg);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .urgency-bar.alta   { background: #450a0a; color: #fca5a5; border: 1px solid #7f1d1d; }
-    .urgency-bar.media  { background: #431407; color: #fdba74; border: 1px solid #7c2d12; }
-    .urgency-bar.baixa  { background: #052e16; color: #6ee7b7; border: 1px solid #064e3b; }
-
-    .msg-area {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: var(--r-lg);
-      padding: 16px;
-    }
-
-    .msg-area-label {
-      font-size: 10px; font-weight: 700; color: #64748b;
-      text-transform: uppercase; letter-spacing: .08em;
-      margin-bottom: 10px;
-    }
-
-    .msg-area textarea {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: var(--r-md);
-      color: #e2e8f0;
-      font-size: 13px;
-      padding: 12px;
-      resize: vertical;
-      min-height: 110px;
-      line-height: 1.65;
-      font-family: inherit;
-      transition: border-color .12s;
-    }
-
+    .urgency-bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--r-lg); font-size: 13px; font-weight: 600; }
+    .urgency-bar.alta  { background: #450a0a; color: #fca5a5; border: 1px solid #7f1d1d; }
+    .urgency-bar.media { background: #431407; color: #fdba74; border: 1px solid #7c2d12; }
+    .urgency-bar.baixa { background: #052e16; color: #6ee7b7; border: 1px solid #064e3b; }
+    .msg-area { background: #1e293b; border: 1px solid #334155; border-radius: var(--r-lg); padding: 16px; }
+    .msg-area-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+    .msg-area textarea { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: var(--r-md); color: #e2e8f0; font-size: 13px; padding: 12px; resize: vertical; min-height: 110px; line-height: 1.65; font-family: inherit; transition: border-color .12s; }
     .msg-area textarea:focus { outline: none; border-color: #6366f1; }
-
-    .panel-thinking {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 14px; padding: 60px 24px;
-      color: #475569; text-align: center;
-    }
-
-    .panel-thinking .spin-lg {
-      width: 36px; height: 36px;
-      border: 3px solid #1e293b;
-      border-top-color: #6366f1;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-    }
-
+    .panel-thinking { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 60px 24px; color: #475569; text-align: center; }
+    .panel-thinking .spin-lg { width: 36px; height: 36px; border: 3px solid #1e293b; border-top-color: #6366f1; border-radius: 50%; animation: spin .8s linear infinite; }
     .panel-thinking p    { font-size: 14px; color: #94a3b8; }
     .panel-thinking span { font-size: 12px; color: #475569; }
-
-    .painel-footer {
-      padding: 16px 24px;
-      border-top: 1px solid #1e293b;
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-panel-close {
-      padding: 10px 16px;
-      background: transparent;
-      border: 1px solid #334155;
-      border-radius: var(--r-md);
-      color: #94a3b8;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all .12s;
-    }
-
+    .painel-footer { padding: 16px 24px; border-top: 1px solid #1e293b; display: flex; gap: 8px; }
+    .btn-panel-close   { padding: 10px 16px; background: transparent; border: 1px solid #334155; border-radius: var(--r-md); color: #94a3b8; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all .12s; }
     .btn-panel-close:hover { background: #1e293b; color: #e2e8f0; }
-
-    .btn-panel-log {
-      padding: 10px 14px;
-      background: #1e40af;
-      border: none;
-      border-radius: var(--r-md);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background .12s;
-    }
-
+    .btn-panel-log     { padding: 10px 14px; background: #1e40af; border: none; border-radius: var(--r-md); color: #fff; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: background .12s; }
     .btn-panel-log:hover { background: #1d4ed8; }
-
-    .btn-panel-approve {
-      flex: 1;
-      padding: 10px 16px;
-      background: #16a34a;
-      border: none;
-      border-radius: var(--r-md);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background .12s;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-
+    .btn-panel-approve { flex: 1; padding: 10px 16px; background: #16a34a; border: none; border-radius: var(--r-md); color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .12s; display: flex; align-items: center; justify-content: center; gap: 6px; }
     .btn-panel-approve:hover { background: #15803d; }
 
-    /* ── MODAL ── */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(16,24,40,.6);
-      backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 200;
-    }
-
-    .modal-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: 28px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: var(--shadow-lg);
-      animation: modalIn .18s ease;
-    }
-
-    @keyframes modalIn {
-      from { transform: scale(.96) translateY(8px); opacity: 0; }
-      to   { transform: scale(1)   translateY(0);   opacity: 1; }
-    }
-
-    .modal-card h3 {
-      font-size: 16px; font-weight: 600;
-      color: var(--text-1); margin-bottom: 4px;
-    }
-
-    .modal-card .modal-sub {
-      font-size: 13px; color: var(--text-4); margin-bottom: 20px;
-    }
-
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(16,24,40,.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 200; }
+    .modal-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 28px; width: 90%; max-width: 400px; box-shadow: var(--shadow-lg); animation: modalIn .18s ease; }
+    @keyframes modalIn { from{transform:scale(.96) translateY(8px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+    .modal-card h3 { font-size: 16px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .modal-card .modal-sub { font-size: 13px; color: var(--text-4); margin-bottom: 20px; }
     .form-group { margin-top: 16px; }
-
-    .form-label {
-      display: block;
-      font-size: 13px; font-weight: 500;
-      color: var(--text-2); margin-bottom: 6px;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 9px 13px;
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      border-radius: var(--r-md);
-      font-size: 14px;
-      color: var(--text-1);
-      font-family: inherit;
-      box-shadow: var(--shadow-xs);
-      transition: border-color .12s, box-shadow .12s;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--brand);
-      box-shadow: 0 0 0 3px rgba(37,99,235,.12);
-    }
-
+    .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 6px; }
+    .form-control { width: 100%; padding: 9px 13px; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--r-md); font-size: 14px; color: var(--text-1); font-family: inherit; box-shadow: var(--shadow-xs); transition: border-color .12s, box-shadow .12s; }
+    .form-control:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
     .modal-footer { display: flex; gap: 10px; margin-top: 24px; }
-
-    .btn-modal-cancel {
-      flex: 1; padding: 10px;
-      background: var(--surface);
-      border: 1px solid var(--border-2);
-      border-radius: var(--r-md);
-      font-size: 14px; font-weight: 500;
-      color: var(--text-2); cursor: pointer;
-      font-family: inherit;
-      transition: all .12s;
-    }
-
+    .btn-modal-cancel { flex: 1; padding: 10px; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--r-md); font-size: 14px; font-weight: 500; color: var(--text-2); cursor: pointer; font-family: inherit; transition: all .12s; }
     .btn-modal-cancel:hover { background: var(--bg); }
-
-    .btn-modal-save {
-      flex: 1; padding: 10px;
-      background: var(--brand);
-      border: none;
-      border-radius: var(--r-md);
-      font-size: 14px; font-weight: 600;
-      color: #fff; cursor: pointer;
-      font-family: inherit;
-      transition: background .12s;
-      box-shadow: 0 1px 3px rgba(37,99,235,.3);
-    }
-
+    .btn-modal-save { flex: 1; padding: 10px; background: var(--brand); border: none; border-radius: var(--r-md); font-size: 14px; font-weight: 600; color: #fff; cursor: pointer; font-family: inherit; transition: background .12s; box-shadow: 0 1px 3px rgba(37,99,235,.3); }
     .btn-modal-save:hover { background: var(--brand-700); }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .page { padding: 16px; }
-      header { padding: 0 16px; }
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (max-width: 768px) { .page{padding:16px} header{padding:0 16px} .metrics-grid{grid-template-columns:repeat(2,1fr)} .nav-tabs{padding:0 16px} }
   </style>
 </head>
 <body>
@@ -773,126 +284,94 @@
     </div>
   </div>
   <div class="header-right">
-    <div class="ai-pill">
-      <div class="pulse"></div>
-      Agente IA ativo
-    </div>
-    <div class="tenant-pill">
-      <div class="tenant-avatar">B</div>
-      FibraMax · Beatriz
-    </div>
+    <div class="ai-pill"><div class="pulse"></div>Agente IA ativo</div>
+    <div class="tenant-pill"><div class="tenant-avatar">B</div>FibraMax · Beatriz</div>
   </div>
 </header>
 
+<!-- NAV TABS -->
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="trocarAba('painel', this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Painel de Retenção
+  </button>
+  <button class="nav-tab" onclick="trocarAba('relatorio', this)">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+    Relatório Semanal
+  </button>
+</nav>
+
 <div class="page">
 
-  <!-- PAGE TITLE -->
-  <div class="page-title">
-    <h2>Painel de Retenção</h2>
-    <p>Clientes em risco identificados automaticamente. Críticos analisados pela IA.</p>
-  </div>
+  <!-- ── ABA PAINEL ── -->
+  <div id="tab-painel" class="tab-panel active">
+    <div class="page-title">
+      <h2>Painel de Retenção</h2>
+      <p>Clientes em risco identificados automaticamente. Críticos analisados pela IA.</p>
+    </div>
 
-  <!-- METRICS -->
-  <div class="metrics-grid">
-    <div class="metric-card c-green">
-      <div class="metric-label">💰 MRR Salvo</div>
-      <div class="metric-value" id="roi-mrr">R$ —</div>
-      <div class="metric-sub">receita protegida</div>
+    <div class="metrics-grid">
+      <div class="metric-card c-green"><div class="metric-label">💰 MRR Salvo</div><div class="metric-value" id="roi-mrr">R$ —</div><div class="metric-sub">receita protegida</div></div>
+      <div class="metric-card c-blue"><div class="metric-label">📈 ARR Projetado</div><div class="metric-value" id="roi-arr">R$ —</div><div class="metric-sub">anualizado</div></div>
+      <div class="metric-card c-blue"><div class="metric-label">🎯 Taxa Retenção</div><div class="metric-value" id="roi-taxa">— %</div><div class="metric-sub">das abordagens</div></div>
+      <div class="metric-card c-green"><div class="metric-label">✅ Retidos</div><div class="metric-value" id="roi-retidos">—</div><div class="metric-sub">clientes salvos</div></div>
+      <div class="metric-card c-amber"><div class="metric-label">⏳ Pendentes</div><div class="metric-value" id="roi-pendentes">—</div><div class="metric-sub">aguardando desfecho</div></div>
+      <div class="metric-card c-orange"><div class="metric-label">🔥 MRR em Risco</div><div class="metric-value" id="roi-receita-risco">R$ —</div><div class="metric-sub">críticos + alerta</div></div>
+      <div class="metric-card c-red"><div class="metric-label">🚨 Críticos</div><div class="metric-value" id="cnt-critico">—</div><div class="metric-sub">score abaixo de 30</div></div>
+      <div class="metric-card c-amber"><div class="metric-label">⚠️ Em Alerta</div><div class="metric-value" id="cnt-alerta">—</div><div class="metric-sub">score 30 a 49</div></div>
+      <div class="metric-card c-green"><div class="metric-label">✅ Saudáveis</div><div class="metric-value" id="cnt-saudavel">—</div><div class="metric-sub">score acima de 50</div></div>
+      <div class="metric-card c-purple"><div class="metric-label">🛡️ Retidos semana</div><div class="metric-value" id="cnt-retido-semana">—</div><div class="metric-sub">recuperados esta semana</div></div>
     </div>
-    <div class="metric-card c-blue">
-      <div class="metric-label">📈 ARR Projetado</div>
-      <div class="metric-value" id="roi-arr">R$ —</div>
-      <div class="metric-sub">anualizado</div>
-    </div>
-    <div class="metric-card c-blue">
-      <div class="metric-label">🎯 Taxa Retenção</div>
-      <div class="metric-value" id="roi-taxa">— %</div>
-      <div class="metric-sub">das abordagens</div>
-    </div>
-    <div class="metric-card c-green">
-      <div class="metric-label">✅ Retidos</div>
-      <div class="metric-value" id="roi-retidos">—</div>
-      <div class="metric-sub">clientes salvos</div>
-    </div>
-    <div class="metric-card c-amber">
-      <div class="metric-label">⏳ Pendentes</div>
-      <div class="metric-value" id="roi-pendentes">—</div>
-      <div class="metric-sub">aguardando desfecho</div>
-    </div>
-    <div class="metric-card c-orange">
-      <div class="metric-label">🔥 MRR em Risco</div>
-      <div class="metric-value" id="roi-receita-risco">R$ —</div>
-      <div class="metric-sub">críticos + alerta</div>
-    </div>
-    <div class="metric-card c-red">
-      <div class="metric-label">🚨 Críticos</div>
-      <div class="metric-value" id="cnt-critico">—</div>
-      <div class="metric-sub">score abaixo de 30</div>
-    </div>
-    <div class="metric-card c-amber">
-      <div class="metric-label">⚠️ Em Alerta</div>
-      <div class="metric-value" id="cnt-alerta">—</div>
-      <div class="metric-sub">score 30 a 49</div>
-    </div>
-    <div class="metric-card c-green">
-      <div class="metric-label">✅ Saudáveis</div>
-      <div class="metric-value" id="cnt-saudavel">—</div>
-      <div class="metric-sub">score acima de 50</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">👥 Total</div>
-      <div class="metric-value" id="cnt-total">—</div>
-      <div class="metric-sub">clientes ativos</div>
-    </div>
-  </div>
 
-  <!-- TABLE CARD -->
-  <div class="table-card">
-
-    <!-- TOOLBAR -->
-    <div class="table-toolbar">
-      <div class="table-toolbar-left">
-        <span class="toolbar-title" id="titulo-lista">Clientes</span>
-        <span class="toolbar-count" id="toolbar-count">—</span>
-        <div class="filter-tabs">
-          <button class="filter-tab active" onclick="filtrar('todos',this)">Todos</button>
-          <button class="filter-tab" onclick="filtrar('critico',this)">🚨 Críticos</button>
-          <button class="filter-tab" onclick="filtrar('alerta',this)">⚠️ Alerta</button>
-          <button class="filter-tab" onclick="filtrar('saudavel',this)">✅ Saudáveis</button>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span class="toolbar-title" id="titulo-lista">Clientes</span>
+          <span class="toolbar-count" id="toolbar-count">—</span>
+          <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filtrar('todos',this)">Todos</button>
+            <button class="filter-tab" onclick="filtrar('critico',this)">🚨 Críticos</button>
+            <button class="filter-tab" onclick="filtrar('alerta',this)">⚠️ Alerta</button>
+            <button class="filter-tab" onclick="filtrar('saudavel',this)">✅ Saudáveis</button>
+            <button class="filter-tab" onclick="filtrar('retido_semana',this)">🛡️ Retidos</button>
+          </div>
+        </div>
+        <div class="sort-wrap">
+          <span class="sort-label">Ordenar por</span>
+          <select class="sort-select" onchange="mudarOrdem(this.value)">
+            <option value="valor_risco">Maior valor em risco</option>
+            <option value="score">Menor score</option>
+            <option value="ticket">Maior ticket</option>
+          </select>
+          <button class="btn-refresh" onclick="carregarTudo()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Atualizar
+          </button>
         </div>
       </div>
-      <div class="sort-wrap">
-        <span class="sort-label">Ordenar por</span>
-        <select class="sort-select" onchange="mudarOrdem(this.value)">
-          <option value="valor_risco">Maior valor em risco</option>
-          <option value="score">Menor score</option>
-          <option value="ticket">Maior ticket</option>
-        </select>
-        <button class="btn-refresh" onclick="carregarTudo()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-          Atualizar
-        </button>
+      <div id="ai-status" style="display:none" class="ai-status-bar">
+        <div class="spinner-sm"></div>
+        <span id="ai-status-txt">Agente analisando clientes críticos...</span>
       </div>
-    </div>
-
-    <!-- AI STATUS -->
-    <div id="ai-status" style="display:none" class="ai-status-bar">
-      <div class="spinner-sm"></div>
-      <span id="ai-status-txt">Agente analisando clientes críticos...</span>
-    </div>
-
-    <!-- TABLE CONTENT -->
-    <div style="overflow-x:auto">
-      <div id="conteudo">
-        <div class="state-box">
-          <div class="spinner-lg"></div>
-          <p>Carregando clientes...</p>
-          <span>Conectando ao Supabase</span>
+      <div style="overflow-x:auto">
+        <div id="conteudo">
+          <div class="state-box"><div class="spinner-lg"></div><p>Carregando clientes...</p><span>Conectando ao Supabase</span></div>
         </div>
       </div>
     </div>
-
   </div>
+
+  <!-- ── ABA RELATÓRIO ── -->
+  <div id="tab-relatorio" class="tab-panel">
+    <div class="page-title">
+      <h2>Relatório Semanal</h2>
+      <p id="relatorio-periodo">Semana atual — carregando...</p>
+    </div>
+    <div id="relatorio-conteudo">
+      <div class="state-box"><div class="spinner-lg"></div><p>Carregando relatório...</p></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- PAINEL LATERAL IA -->
@@ -906,11 +385,7 @@
       <button class="btn-close-panel" onclick="fecharPainel()">✕</button>
     </div>
     <div class="painel-body" id="painel-body">
-      <div class="panel-thinking">
-        <div class="spin-lg"></div>
-        <p>Agente analisando perfil...</p>
-        <span>Groq · Llama 3.3 processando dados</span>
-      </div>
+      <div class="panel-thinking"><div class="spin-lg"></div><p>Agente analisando perfil...</p><span>Groq · Llama 3.3 processando dados</span></div>
     </div>
     <div class="painel-footer" id="painel-footer" style="display:none">
       <button class="btn-panel-close" onclick="fecharPainel()">Fechar</button>
@@ -965,14 +440,25 @@
   let modalClienteId   = null
   let modalAbordagemId = null
 
-  const fmt  = v => 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-  const cor  = s => s < 30 ? '#b42318' : s < 50 ? '#b54708' : '#027a48'
-  const corFill = s => s < 30 ? '#ef4444' : s < 50 ? '#f97316' : '#16a34a'
-  const H    = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' }
-  const get  = p => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { headers: H }).then(r => r.json())
-  const post = (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'POST', headers:{...H,Prefer:'return=representation'}, body:JSON.stringify(b) }).then(r => r.json())
-  const patch= (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'PATCH', headers:H, body:JSON.stringify(b) })
+  const fmt     = v => 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+  const fmtNum  = v => Number(v).toLocaleString('pt-BR')
+  const cor     = s => s >= 100 ? '#6d28d9' : s < 30 ? '#b42318' : s < 50 ? '#b54708' : '#027a48'
+  const corFill = s => s >= 100 ? '#7c3aed' : s < 30 ? '#ef4444' : s < 50 ? '#f97316' : '#16a34a'
+  const H       = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' }
+  const get     = p => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { headers: H }).then(r => r.json())
+  const post    = (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'POST', headers:{...H,Prefer:'return=representation'}, body:JSON.stringify(b) }).then(r => r.json())
+  const patch   = (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'PATCH', headers:H, body:JSON.stringify(b) })
 
+  // ── NAV ──
+  function trocarAba(aba, btn) {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'))
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'))
+    btn.classList.add('active')
+    document.getElementById('tab-' + aba).classList.add('active')
+    if (aba === 'relatorio') carregarRelatorio()
+  }
+
+  // ── IA ──
   async function analisarComIA(cliente) {
     try {
       const res = await fetch(EDGE_URL, {
@@ -993,8 +479,7 @@
       return {
         diagnostico: `${cliente.nome.split(' ')[0]} apresenta múltiplos fatores de risco que requerem atenção imediata.`,
         acao_recomendada: 'Entrar em contato demonstrando cuidado com a experiência do cliente.',
-        urgencia: 'alta',
-        justificativa_urgencia: 'Score crítico.',
+        urgencia: 'alta', justificativa_urgencia: 'Score crítico.',
         mensagem_whatsapp: `Olá ${cliente.nome.split(' ')[0]}! Aqui é da FibraMax. Passando para saber como está sua experiência com a internet. Posso te ajudar em algo?`
       }
     }
@@ -1003,14 +488,12 @@
   async function analisarCriticosBackground() {
     const criticos = todosClientes.filter(c => c.classificacao === 'critico')
     if (!criticos.length) return
-    const statusEl  = document.getElementById('ai-status')
+    const statusEl = document.getElementById('ai-status')
     const statusTxt = document.getElementById('ai-status-txt')
     statusEl.style.display = 'flex'
-    statusTxt.textContent  = `Analisando ${criticos.length} clientes críticos...`
-
+    statusTxt.textContent = `Analisando ${criticos.length} clientes críticos...`
     const chunks = []
     for (let i = 0; i < criticos.length; i += 3) chunks.push(criticos.slice(i, i + 3))
-
     let done = 0
     for (const chunk of chunks) {
       await Promise.all(chunk.map(async c => {
@@ -1018,28 +501,25 @@
         done++
         statusTxt.textContent = `Analisou ${done}/${criticos.length} clientes críticos...`
         const el = document.getElementById(`ai-ind-${c.id_interno_cliente}`)
-        if (el) {
-          el.className = 'ai-indicator ready'
-          el.innerHTML = `<span class="ai-dot"></span> Diagnóstico pronto`
-        }
+        if (el) { el.className = 'ai-indicator ready'; el.innerHTML = `<span class="ai-dot"></span> Diagnóstico pronto` }
       }))
     }
-
     statusEl.style.display = 'none'
     renderTabela()
   }
 
+  // ── CARREGAR ──
   async function carregarTudo() {
-    document.getElementById('conteudo').innerHTML = `
-      <div class="state-box">
-        <div class="spinner-lg"></div>
-        <p>Carregando clientes...</p>
-        <span>Conectando ao Supabase</span>
-      </div>`
+    document.getElementById("conteudo").innerHTML = `<div class="state-box"><div class="spinner-lg"></div><p>Carregando clientes...</p><span>Conectando ao Supabase</span></div>`
     analisesCriticos = {}
-    await Promise.all([carregarClientes(), carregarROI()])
-    renderTabela()
-    analisarCriticosBackground()
+    try {
+      await carregarClientes()
+      await carregarROI()
+      renderTabela()
+      analisarCriticosBackground()
+    } catch(e) {
+      document.getElementById("conteudo").innerHTML = `<div class="state-box"><div class="icon">⚠️</div><p>Erro ao carregar</p><span>${e.message}</span></div>`
+    }
   }
 
   async function carregarClientes() {
@@ -1053,16 +533,33 @@
     abordagensMap = {}
     abordagens.forEach(a => { if (!abordagensMap[a.id_interno_cliente]) abordagensMap[a.id_interno_cliente] = a })
 
+    // Retidos nesta semana
+    const inicioSemana = new Date(); inicioSemana.setHours(0,0,0,0)
+    inicioSemana.setDate(inicioSemana.getDate() - inicioSemana.getDay())
+    const retidosSemana = new Set(
+      abordagens
+        .filter(a => a.desfecho === 'retido' && a.resolvido_em && new Date(a.resolvido_em) >= inicioSemana)
+        .map(a => a.id_interno_cliente)
+    )
+
     todosClientes = clientes.map(c => {
       const fatura   = faturas.filter(f => f.id_interno_cliente === c.id_interno_cliente)
       const maxDias  = fatura.length ? Math.max(...fatura.map(f => f.dias_atraso)) : 0
       const osAberta = chamados.some(ch => ch.id_interno_cliente === c.id_interno_cliente && ch.status === 'Aberto')
+      const foiRetidoSemana = retidosSemana.has(c.id_interno_cliente)
 
       const pC = c.tipo_contrato    === 'Mensal sem fidelidade' ? 30 : 0
       const pP = c.metodo_pagamento === 'Boleto Manual'         ? 20 : 0
       const pS = osAberta                                        ? 40 : 0
       const pA = Math.min(10, maxDias)
-      const score = Math.max(0, 100 - pC - pP - pS - pA)
+      const scoreReal = Math.max(0, 100 - pC - pP - pS - pA)
+
+      // Se retido esta semana → score 100 no display
+      const score = foiRetidoSemana ? 100 : scoreReal
+      const classificacao = foiRetidoSemana ? 'retido_semana'
+        : scoreReal < 30 ? 'critico'
+        : scoreReal < 50 ? 'alerta'
+        : 'saudavel'
 
       const motivos = []
       if (pC) motivos.push({ label: 'Sem Fidelidade',   tipo: 'fid' })
@@ -1070,32 +567,150 @@
       if (pS) motivos.push({ label: 'OS Técnica Ativa', tipo: 'os' })
       if (maxDias > 0) motivos.push({ label: `Atraso (${maxDias}d)`, tipo: 'atraso' })
 
-      const classificacao = score < 30 ? 'critico' : score < 50 ? 'alerta' : 'saudavel'
-      const ticket        = parseFloat(c.ticket_mensal) || 0
-      const valor_risco   = ticket * ((100 - score) / 100)
-      return { ...c, score, motivos, classificacao, maxDias, osAberta, ticket, valor_risco }
+      const ticket      = parseFloat(c.ticket_mensal) || 0
+      const valor_risco = foiRetidoSemana ? 0 : ticket * ((100 - scoreReal) / 100)
+      return { ...c, score, scoreReal, motivos, classificacao, maxDias, osAberta, ticket, valor_risco, foiRetidoSemana }
     })
 
-    document.getElementById('cnt-critico').textContent  = todosClientes.filter(c => c.classificacao === 'critico').length
-    document.getElementById('cnt-alerta').textContent   = todosClientes.filter(c => c.classificacao === 'alerta').length
-    document.getElementById('cnt-saudavel').textContent = todosClientes.filter(c => c.classificacao === 'saudavel').length
-    document.getElementById('cnt-total').textContent    = todosClientes.length
-
-    const receitaRisco = todosClientes.filter(c => c.classificacao !== 'saudavel').reduce((s, c) => s + c.ticket, 0)
-    document.getElementById('roi-receita-risco').textContent = fmt(receitaRisco)
+    const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val }
+    setEl("cnt-critico",       todosClientes.filter(c => c.classificacao === "critico").length)
+    setEl("cnt-alerta",        todosClientes.filter(c => c.classificacao === "alerta").length)
+    setEl("cnt-saudavel",      todosClientes.filter(c => c.classificacao === "saudavel").length)
+    setEl("cnt-retido-semana", todosClientes.filter(c => c.classificacao === "retido_semana").length)
+    setEl("cnt-total",         todosClientes.length)
+    const receitaRisco = todosClientes.filter(c => c.classificacao !== "saudavel" && c.classificacao !== "retido_semana").reduce((s, c) => s + c.ticket, 0)
+    setEl("roi-receita-risco", fmt(receitaRisco))
   }
 
   async function carregarROI() {
     const roi = await get(`view_roi?tenant_id=eq.${TENANT_ID}&select=*`)
     if (!roi.length) return
     const r = roi[0]
-    document.getElementById('roi-mrr').textContent      = fmt(r.mrr_salvo)
-    document.getElementById('roi-arr').textContent      = fmt(r.arr_salvo)
-    document.getElementById('roi-taxa').textContent     = (r.taxa_retencao_pct ?? '—') + (r.taxa_retencao_pct != null ? '%' : '')
-    document.getElementById('roi-retidos').textContent  = r.retidos
-    document.getElementById('roi-pendentes').textContent= r.pendentes
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val }
+    set("roi-mrr",      fmt(r.mrr_salvo))
+    set("roi-arr",      fmt(r.arr_salvo))
+    set("roi-taxa",     (r.taxa_retencao_pct ?? "—") + (r.taxa_retencao_pct != null ? "%" : ""))
+    set("roi-retidos",  r.retidos)
+    set("roi-pendentes",r.pendentes)
   }
 
+  // ── RELATÓRIO SEMANAL ──
+  async function carregarRelatorio() {
+    document.getElementById('relatorio-conteudo').innerHTML = `<div class="state-box"><div class="spinner-lg"></div><p>Carregando relatório...</p></div>`
+    const dados = await get(`view_relatorio_semanal?tenant_id=eq.${TENANT_ID}&select=*`)
+
+    const hoje = new Date()
+    const seg  = new Date(hoje); seg.setDate(hoje.getDate() - hoje.getDay() + 1)
+    const dom  = new Date(seg);  dom.setDate(seg.getDate() + 6)
+    const fmtData = d => d.toLocaleDateString('pt-BR', { day:'2-digit', month:'short' })
+    document.getElementById('relatorio-periodo').textContent = `${fmtData(seg)} a ${fmtData(dom)} de ${hoje.getFullYear()}`
+
+    if (!dados.length) {
+      document.getElementById('relatorio-conteudo').innerHTML = `
+        <div class="empty-report">
+          <div class="icon">📊</div>
+          <h3>Nenhuma abordagem registrada esta semana</h3>
+          <p>Comece a registrar desfechos no painel de retenção para ver o relatório aqui.</p>
+        </div>`
+      return
+    }
+
+    const r = dados[0]
+    const total = r.total_abordagens || 0
+    const pct = v => total > 0 ? Math.round((v / total) * 100) : 0
+
+    const deltaRetidos = r.variacao_retidos || 0
+    const deltaMrr     = r.variacao_mrr || 0
+    const deltaRetClass = deltaRetidos > 0 ? 'up' : deltaRetidos < 0 ? 'down' : 'neutral'
+    const deltaMrrClass = deltaMrr > 0 ? 'up' : deltaMrr < 0 ? 'down' : 'neutral'
+    const deltaRetIcon  = deltaRetidos > 0 ? '↑' : deltaRetidos < 0 ? '↓' : '→'
+    const deltaMrrIcon  = deltaMrr > 0 ? '↑' : deltaMrr < 0 ? '↓' : '→'
+
+    document.getElementById('relatorio-conteudo').innerHTML = `
+      <!-- KPIs -->
+      <div class="report-grid">
+        <div class="report-card c-blue">
+          <div class="report-card-label">📋 Abordagens</div>
+          <div class="report-card-value">${r.total_abordagens}</div>
+          <div class="report-card-sub">total na semana</div>
+        </div>
+        <div class="report-card c-green">
+          <div class="report-card-label">✅ Clientes Retidos</div>
+          <div class="report-card-value">${r.retidos}</div>
+          <div class="report-card-sub">convertidos esta semana</div>
+          <div class="report-card-delta ${deltaRetClass}">${deltaRetIcon} ${Math.abs(deltaRetidos)} vs semana anterior</div>
+        </div>
+        <div class="report-card c-green">
+          <div class="report-card-label">💰 MRR Salvo</div>
+          <div class="report-card-value" style="font-size:24px">${fmt(r.mrr_salvo)}</div>
+          <div class="report-card-sub">receita protegida</div>
+          <div class="report-card-delta ${deltaMrrClass}">${deltaMrrIcon} ${fmt(Math.abs(deltaMrr))} vs semana anterior</div>
+        </div>
+        <div class="report-card c-blue">
+          <div class="report-card-label">🎯 Taxa de Retenção</div>
+          <div class="report-card-value">${r.taxa_retencao_pct ?? '—'}${r.taxa_retencao_pct != null ? '%' : ''}</div>
+          <div class="report-card-sub">retidos ÷ (retidos + cancelou)</div>
+        </div>
+        <div class="report-card c-red">
+          <div class="report-card-label">❌ Cancelamentos</div>
+          <div class="report-card-value">${r.cancelados}</div>
+          <div class="report-card-sub">não foi possível reter</div>
+        </div>
+        <div class="report-card c-amber">
+          <div class="report-card-label">⏳ Pendentes</div>
+          <div class="report-card-value">${r.pendentes}</div>
+          <div class="report-card-sub">aguardando desfecho</div>
+        </div>
+      </div>
+
+      <!-- FUNIL -->
+      <div class="funnel-card">
+        <div class="report-section-title">Funil de Retenção da Semana</div>
+        <div class="funnel-row">
+          <div class="funnel-label">Abordados</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar-fill" style="width:100%;background:#2563eb"></div></div>
+          <div class="funnel-val" style="color:#2563eb">${r.total_abordagens}</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">✅ Retidos</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar-fill" style="width:${pct(r.retidos)}%;background:#027a48"></div></div>
+          <div class="funnel-val" style="color:#027a48">${r.retidos} <span style="font-size:11px;font-weight:400;color:#98a2b3">(${pct(r.retidos)}%)</span></div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">📵 Não atendeu</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar-fill" style="width:${pct(r.nao_atendeu)}%;background:#667085"></div></div>
+          <div class="funnel-val" style="color:#667085">${r.nao_atendeu} <span style="font-size:11px;font-weight:400;color:#98a2b3">(${pct(r.nao_atendeu)}%)</span></div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">❌ Cancelou</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar-fill" style="width:${pct(r.cancelados)}%;background:#b42318"></div></div>
+          <div class="funnel-val" style="color:#b42318">${r.cancelados} <span style="font-size:11px;font-weight:400;color:#98a2b3">(${pct(r.cancelados)}%)</span></div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">⏳ Pendente</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar-fill" style="width:${pct(r.pendentes)}%;background:#b54708"></div></div>
+          <div class="funnel-val" style="color:#b54708">${r.pendentes} <span style="font-size:11px;font-weight:400;color:#98a2b3">(${pct(r.pendentes)}%)</span></div>
+        </div>
+      </div>
+
+      <!-- COMPARATIVO -->
+      <div class="report-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div class="report-card">
+          <div class="report-card-label">📅 Semana anterior</div>
+          <div style="display:flex;justify-content:space-between;margin-top:12px">
+            <div><div style="font-size:12px;color:var(--text-4)">Retidos</div><div style="font-size:20px;font-weight:700;color:var(--text-1)">${r.retidos_semana_anterior}</div></div>
+            <div><div style="font-size:12px;color:var(--text-4)">MRR Salvo</div><div style="font-size:20px;font-weight:700;color:var(--text-1)">${fmt(r.mrr_salvo_semana_anterior)}</div></div>
+          </div>
+        </div>
+        <div class="report-card c-green">
+          <div class="report-card-label">📈 ARR Salvo Projetado</div>
+          <div class="report-card-value" style="font-size:22px">${fmt(r.arr_salvo_projetado)}</div>
+          <div class="report-card-sub">MRR desta semana × 12</div>
+        </div>
+      </div>`
+  }
+
+  // ── RENDER TABELA ──
   function ordenar(lista) {
     return [...lista].sort((a, b) => {
       if (ordemAtiva === 'score')       return a.score - b.score
@@ -1115,25 +730,23 @@
   function mudarOrdem(val) { ordemAtiva = val; renderTabela() }
 
   function renderTabela() {
-    let lista = filtroAtivo === 'todos' ? todosClientes : todosClientes.filter(c => c.classificacao === filtroAtivo)
+    let lista = filtroAtivo === 'todos'
+      ? todosClientes
+      : todosClientes.filter(c => c.classificacao === filtroAtivo)
     lista = ordenar(lista)
 
-    const labels = { todos: 'Todos os clientes', critico: 'Clientes críticos', alerta: 'Clientes em alerta', saudavel: 'Clientes saudáveis' }
-    document.getElementById('titulo-lista').textContent = labels[filtroAtivo]
+    const labels = { todos: 'Todos os clientes', critico: 'Clientes críticos', alerta: 'Clientes em alerta', saudavel: 'Clientes saudáveis', retido_semana: 'Retidos esta semana' }
+    document.getElementById('titulo-lista').textContent  = labels[filtroAtivo] || 'Clientes'
     document.getElementById('toolbar-count').textContent = lista.length
 
     if (!lista.length) {
-      document.getElementById('conteudo').innerHTML = `
-        <div class="state-box">
-          <div class="icon">🔍</div>
-          <p>Nenhum cliente nesta categoria</p>
-        </div>`
+      document.getElementById('conteudo').innerHTML = `<div class="state-box"><div class="icon">🔍</div><p>Nenhum cliente nesta categoria</p></div>`
       return
     }
 
-    const riskLabel = { critico: '🚨 Crítico', alerta: '⚠️ Alerta', saudavel: '✅ Saudável' }
+    const riskLabel = { critico: '🚨 Crítico', alerta: '⚠️ Alerta', saudavel: '✅ Saudável', retido_semana: '🛡️ Retido' }
     const defLabels = { pendente: 'Pendente', retido: '✅ Retido', nao_atendeu: '📵 N. atendeu', cancelou: '❌ Cancelou' }
-    const priClass  = { critico: 'pri-1', alerta: 'pri-2', saudavel: 'pri-3' }
+    const priClass  = { critico: 'pri-1', alerta: 'pri-2', saudavel: 'pri-3', retido_semana: 'pri-r' }
 
     const rows = lista.map((c, i) => {
       const tags = c.motivos.map(m => `<span class="motivo-tag ${m.tipo}">${m.label}</span>`).join('')
@@ -1150,9 +763,16 @@
           : `<span class="ai-indicator loading" id="ai-ind-${c.id_interno_cliente}">⏳ Analisando...</span>`
         : ''
 
-      const tel  = c.telefone.replace(/\D/g, '')
-      const msg  = gerarMensagem(c)
-      const wa   = `https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`
+      const tel = c.telefone.replace(/\D/g, '')
+      const msg = gerarMensagem(c)
+      const wa  = `https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`
+
+      // Ticket display: retidos mostram "salvo", outros mostram "em risco"
+      const ticketExtra = c.foiRetidoSemana
+        ? `<div class="ticket-saved">🛡️ ${fmt(c.ticket)} protegido</div>`
+        : c.valor_risco > 0
+          ? `<div class="ticket-risk">🔥 ${fmt(c.valor_risco)} expostos</div>`
+          : ''
 
       return `<tr data-clickable="${eCritico}" onclick="${eCritico ? `abrirPainel('${c.id_interno_cliente}')` : ''}">
         <td style="width:44px;text-align:center;padding-left:20px">
@@ -1165,30 +785,29 @@
         </td>
         <td>
           <div class="score-wrap">
-            <span class="score-num" style="color:${cor(c.score)}">${c.score}</span>
+            <span class="score-num" style="color:${cor(c.score)}">${c.foiRetidoSemana ? '✓' : c.score}</span>
             <div>
-              <div class="score-track"><div class="score-fill" style="width:${c.score}%;background:${corFill(c.score)}"></div></div>
-              <div style="font-size:10px;color:var(--text-5);margin-top:2px">/100</div>
+              <div class="score-track"><div class="score-fill" style="width:${Math.min(c.score,100)}%;background:${corFill(c.score)}"></div></div>
+              <div style="font-size:10px;color:var(--text-5);margin-top:2px">${c.foiRetidoSemana ? 'retido' : '/100'}</div>
             </div>
           </div>
         </td>
         <td><span class="risk-badge ${c.classificacao}">${riskLabel[c.classificacao]}</span></td>
         <td>
           <div class="ticket-main">${fmt(c.ticket)}</div>
-          <div class="ticket-risk">🔥 ${fmt(c.valor_risco)} expostos</div>
+          ${ticketExtra}
         </td>
-        <td><div class="motivos-wrap">${tags || '<span style="color:var(--text-5);font-size:12px">—</span>'}</div></td>
+        <td><div class="motivos-wrap">${c.foiRetidoSemana ? '<span style="font-size:12px;color:var(--green-700);font-weight:500">Situação resolvida esta semana</span>' : tags || '<span style="color:var(--text-5);font-size:12px">—</span>'}</div></td>
         <td onclick="event.stopPropagation()" style="padding-right:20px">
           <div class="action-col">
+            ${!c.foiRetidoSemana ? `
             <a href="${wa}" target="_blank" onclick="registrarAbordagem('${c.id_interno_cliente}',${c.score},'${c.motivos.map(m=>m.label).join(' | ').replace(/'/g,"\\'")}')">
               <button class="btn-wa">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                 Reter
               </button>
-            </a>
-            <button class="btn-desfecho" onclick="abrirModalDesfechoDirecto('${c.id_interno_cliente}')">
-              📋
-            </button>
+            </a>` : ''}
+            <button class="btn-desfecho" onclick="abrirModalDesfechoDirecto('${c.id_interno_cliente}')">📋</button>
           </div>
         </td>
       </tr>`
@@ -1196,114 +815,64 @@
 
     document.getElementById('conteudo').innerHTML = `
       <table>
-        <thead>
-          <tr>
-            <th style="padding-left:20px">#</th>
-            <th>Cliente</th>
-            <th>Score</th>
-            <th>Risco</th>
-            <th>Ticket / Exposição</th>
-            <th>Motivos de risco</th>
-            <th style="padding-right:20px">Ação</th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th style="padding-left:20px">#</th>
+          <th>Cliente</th><th>Score</th><th>Risco</th>
+          <th>Ticket / Exposição</th><th>Motivos de risco</th>
+          <th style="padding-right:20px">Ação</th>
+        </tr></thead>
         <tbody>${rows}</tbody>
       </table>`
   }
 
   async function registrarAbordagem(id, score, motivos) {
     if (abordagensMap[id]) return
-    const res = await post('abordagens', {
-      tenant_id: TENANT_ID, id_interno_cliente: id,
-      score_no_momento: score, motivos_no_momento: motivos, desfecho: 'pendente'
-    })
+    const res = await post('abordagens', { tenant_id: TENANT_ID, id_interno_cliente: id, score_no_momento: score, motivos_no_momento: motivos, desfecho: 'pendente' })
     if (res && res[0]) abordagensMap[id] = res[0]
   }
 
   async function abrirPainel(id) {
     clientePainel = todosClientes.find(c => c.id_interno_cliente === id)
     const c = clientePainel
-
     document.getElementById('painel-nome').textContent = c.nome
     document.getElementById('painel-sub').textContent  = `Score ${c.score}/100 · ${fmt(c.ticket)}/mês · 🔥 ${fmt(c.valor_risco)} em risco`
     document.getElementById('painel-footer').style.display = 'none'
-    document.getElementById('painel-body').innerHTML = `
-      <div class="panel-thinking">
-        <div class="spin-lg"></div>
-        <p>Agente analisando perfil...</p>
-        <span>Groq · Llama 3.3 processando dados</span>
-      </div>`
+    document.getElementById('painel-body').innerHTML = `<div class="panel-thinking"><div class="spin-lg"></div><p>Agente analisando perfil...</p><span>Groq · Llama 3.3 processando dados</span></div>`
     document.getElementById('painel-bg').style.display = 'flex'
     document.body.style.overflow = 'hidden'
-
     let analise = analisesCriticos[id]
-    if (!analise) {
-      analise = await analisarComIA(c)
-      analisesCriticos[id] = analise
-    }
-
+    if (!analise) { analise = await analisarComIA(c); analisesCriticos[id] = analise }
     renderPainel(c, analise)
   }
 
   function renderPainel(c, analise) {
-    const urgClass = { alta: 'alta', media: 'media', baixa: 'baixa' }
-    const urgEmoji = { alta: '🚨', media: '⚠️', baixa: '✅' }
-    const urgLabel = { alta: 'Urgência alta', media: 'Urgência média', baixa: 'Urgência baixa' }
-
+    const urgEmoji = { alta:'🚨', media:'⚠️', baixa:'✅' }
+    const urgLabel = { alta:'Urgência alta', media:'Urgência média', baixa:'Urgência baixa' }
     document.getElementById('painel-body').innerHTML = `
-      <div class="urgency-bar ${urgClass[analise.urgencia] || 'alta'}">
-        ${urgEmoji[analise.urgencia] || '🚨'} ${urgLabel[analise.urgencia] || 'Urgência alta'} — ${analise.justificativa_urgencia}
-      </div>
-      <div class="panel-section">
-        <div class="panel-section-label">✦ Diagnóstico da IA</div>
-        <p>${analise.diagnostico}</p>
-      </div>
-      <div class="panel-section">
-        <div class="panel-section-label">🎯 Ação recomendada</div>
-        <p class="action-text">${analise.acao_recomendada}</p>
-      </div>
-      <div class="msg-area">
-        <div class="msg-area-label">💬 Mensagem WhatsApp — edite se necessário</div>
-        <textarea id="msg-wa">${analise.mensagem_whatsapp}</textarea>
-      </div>`
-
+      <div class="urgency-bar ${analise.urgencia||'alta'}">${urgEmoji[analise.urgencia]||'🚨'} ${urgLabel[analise.urgencia]||'Urgência alta'} — ${analise.justificativa_urgencia}</div>
+      <div class="panel-section"><div class="panel-section-label">✦ Diagnóstico da IA</div><p>${analise.diagnostico}</p></div>
+      <div class="panel-section"><div class="panel-section-label">🎯 Ação recomendada</div><p class="action-text">${analise.acao_recomendada}</p></div>
+      <div class="msg-area"><div class="msg-area-label">💬 Mensagem WhatsApp — edite se necessário</div><textarea id="msg-wa">${analise.mensagem_whatsapp}</textarea></div>`
     const tel = c.telefone.replace(/\D/g, '')
     document.getElementById('btn-aprovar-link').href = `https://wa.me/55${tel}?text=${encodeURIComponent(analise.mensagem_whatsapp)}`
     document.getElementById('painel-footer').style.display = 'flex'
-
     setTimeout(() => {
       const ta = document.getElementById('msg-wa')
-      if (ta) ta.addEventListener('input', () => {
-        document.getElementById('btn-aprovar-link').href = `https://wa.me/55${tel}?text=${encodeURIComponent(ta.value)}`
-      })
+      if (ta) ta.addEventListener('input', () => { document.getElementById('btn-aprovar-link').href = `https://wa.me/55${tel}?text=${encodeURIComponent(ta.value)}` })
     }, 100)
   }
 
-  function fecharPainelOverlay(e) {
-    if (e.target === document.getElementById('painel-bg')) fecharPainel()
-  }
-
-  function fecharPainel() {
-    document.getElementById('painel-bg').style.display = 'none'
-    document.body.style.overflow = ''
-    clientePainel = null
-  }
+  function fecharPainelOverlay(e) { if (e.target === document.getElementById('painel-bg')) fecharPainel() }
+  function fecharPainel() { document.getElementById('painel-bg').style.display = 'none'; document.body.style.overflow = ''; clientePainel = null }
 
   async function registrarAbordagemAprovada() {
     if (!clientePainel || abordagensMap[clientePainel.id_interno_cliente]) return
     const c = clientePainel
-    const res = await post('abordagens', {
-      tenant_id: TENANT_ID, id_interno_cliente: c.id_interno_cliente,
-      score_no_momento: c.score, motivos_no_momento: c.motivos.map(m=>m.label).join(' | '),
-      desfecho: 'pendente', ticket_mensal: c.ticket
-    })
+    const res = await post('abordagens', { tenant_id: TENANT_ID, id_interno_cliente: c.id_interno_cliente, score_no_momento: c.score, motivos_no_momento: c.motivos.map(m=>m.label).join(' | '), desfecho: 'pendente', ticket_mensal: c.ticket })
     if (res && res[0]) { abordagensMap[c.id_interno_cliente] = res[0]; renderTabela() }
   }
 
-  function abrirModalDesfecho() {
-    if (!clientePainel) return
-    abrirModalDesfechoDirecto(clientePainel.id_interno_cliente)
-  }
+  function abrirModalDesfecho() { if (!clientePainel) return; abrirModalDesfechoDirecto(clientePainel.id_interno_cliente) }
 
   function abrirModalDesfechoDirecto(id) {
     modalClienteId   = id
@@ -1321,36 +890,33 @@
     const desfecho = document.getElementById('modal-desfecho').value
     const ticket   = parseFloat(document.getElementById('modal-ticket').value) || 0
     const c = todosClientes.find(x => x.id_interno_cliente === modalClienteId)
-
     if (modalAbordagemId) {
       await patch(`abordagens?id=eq.${modalAbordagemId}`, { desfecho, ticket_mensal: ticket, resolvido_em: new Date().toISOString() })
       abordagensMap[modalClienteId].desfecho = desfecho
+      abordagensMap[modalClienteId].resolvido_em = new Date().toISOString()
     } else {
-      const res = await post('abordagens', {
-        tenant_id: TENANT_ID, id_interno_cliente: modalClienteId,
-        score_no_momento: c.score, motivos_no_momento: c.motivos.map(m=>m.label).join(' | '),
-        desfecho, ticket_mensal: ticket, resolvido_em: new Date().toISOString()
-      })
+      const res = await post('abordagens', { tenant_id: TENANT_ID, id_interno_cliente: modalClienteId, score_no_momento: c.score, motivos_no_momento: c.motivos.map(m=>m.label).join(' | '), desfecho, ticket_mensal: ticket, resolvido_em: new Date().toISOString() })
       if (res && res[0]) abordagensMap[modalClienteId] = res[0]
     }
-
     fecharModal()
-    await carregarROI()
+    await Promise.all([carregarROI(), carregarClientes()])
     renderTabela()
   }
 
   function gerarMensagem(c) {
     const nome = c.nome.split(' ')[0]
-    if (c.osAberta && c.maxDias > 0)
-      return `Olá ${nome}! Aqui é da FibraMax. Identificamos uma instabilidade na sua conexão e gostaríamos de resolver isso agora mesmo. Tem um minutinho para conversarmos?`
-    if (c.osAberta)
-      return `Olá ${nome}! Aqui é da FibraMax. Notamos que você registrou uma ocorrência técnica e queremos garantir que está tudo resolvido. Está tudo ok com sua internet?`
-    if (c.maxDias > 0)
-      return `Olá ${nome}! Aqui é da FibraMax. Passando para oferecer uma forma mais prática de manter sua conta em dia. Posso te ajudar agora?`
+    if (c.osAberta && c.maxDias > 0) return `Olá ${nome}! Aqui é da FibraMax. Identificamos uma instabilidade na sua conexão e gostaríamos de resolver isso agora mesmo. Tem um minutinho para conversarmos?`
+    if (c.osAberta)  return `Olá ${nome}! Aqui é da FibraMax. Notamos que você registrou uma ocorrência técnica e queremos garantir que está tudo resolvido. Está tudo ok com sua internet?`
+    if (c.maxDias > 0) return `Olá ${nome}! Aqui é da FibraMax. Passando para oferecer uma forma mais prática de manter sua conta em dia. Posso te ajudar agora?`
     return `Olá ${nome}! Aqui é da FibraMax. Passando para saber como está sua experiência com a internet. Posso te ajudar em algo?`
   }
 
-  carregarTudo()
+  // Aguarda DOM completo antes de carregar
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', carregarTudo)
+  } else {
+    setTimeout(carregarTudo, 100)
+  }
 </script>
 </body>
 </html>
