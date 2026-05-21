@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zero Churn IA — Upload de Dados</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 32px 16px; }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+    p.sub { color: #94a3b8; font-size: 14px; margin-bottom: 32px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; }
+    .card h2 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .card p { font-size: 12px; color: #64748b; margin-bottom: 12px; }
+    .card .cols { font-size: 11px; color: #475569; background: #0f172a; border-radius: 6px; padding: 8px 10px; margin-bottom: 12px; line-height: 1.8; }
+    .drop { border: 2px dashed #334155; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; font-size: 13px; color: #64748b; }
+    .drop:hover, .drop.over { border-color: #6366f1; background: #1e1b4b22; color: #a5b4fc; }
+    .drop input { display: none; }
+    .drop.loaded { border-color: #10b981; color: #6ee7b7; }
+    .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; margin-top: 8px; }
+    .badge.ok { background: #064e3b; color: #6ee7b7; }
+    .badge.err { background: #7f1d1d; color: #fca5a5; }
+    button#btnEnviar { width: 100%; padding: 14px; background: #6366f1; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background .2s; }
+    button#btnEnviar:hover { background: #4f46e5; }
+    button#btnEnviar:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+    #log { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px; font-size: 13px; min-height: 80px; line-height: 2; }
+    .log-ok   { color: #6ee7b7; }
+    .log-err  { color: #fca5a5; }
+    .log-info { color: #93c5fd; }
+    .log-warn { color: #fcd34d; }
+  </style>
+</head>
+<body>
+
+<h1>⚡ Zero Churn IA — Upload Semanal</h1>
+<p class="sub">Importe os 3 arquivos CSV exportados do seu ERP para atualizar os scores de risco.</p>
+
+<div class="grid">
+
+  <!-- CARD 1: Clientes -->
+  <div class="card">
+    <h2>📋 Clientes Ativos</h2>
+    <p>Exportado do ERP — base de assinantes</p>
+    <div class="cols">
+      Colunas obrigatórias:<br>
+      <b>id_interno_cliente</b> · <b>nome</b> · <b>telefone</b><br>
+      <b>tipo_contrato</b> · <b>metodo_pagamento</b>
+    </div>
+    <div class="drop" id="drop-clientes" onclick="document.getElementById('file-clientes').click()">
+      <input type="file" id="file-clientes" accept=".csv">
+      📂 Clique ou arraste o CSV aqui
+      <div id="badge-clientes"></div>
+    </div>
+  </div>
+
+  <!-- CARD 2: Faturas -->
+  <div class="card">
+    <h2>💰 Faturas em Atraso</h2>
+    <p>Apenas faturas vencidas e não pagas</p>
+    <div class="cols">
+      Colunas obrigatórias:<br>
+      <b>id_interno_fatura</b> · <b>id_interno_cliente</b><br>
+      <b>dias_atraso</b> · <b>valor</b>
+    </div>
+    <div class="drop" id="drop-faturas" onclick="document.getElementById('file-faturas').click()">
+      <input type="file" id="file-faturas" accept=".csv">
+      📂 Clique ou arraste o CSV aqui
+      <div id="badge-faturas"></div>
+    </div>
+  </div>
+
+  <!-- CARD 3: Chamados -->
+  <div class="card">
+    <h2>🔧 Ordens de Serviço</h2>
+    <p>Chamados técnicos abertos e recentes</p>
+    <div class="cols">
+      Colunas obrigatórias:<br>
+      <b>id_interno_chamado</b> · <b>id_interno_cliente</b><br>
+      <b>status</b> · <b>tipo_ocorrencia</b>
+    </div>
+    <div class="drop" id="drop-chamados" onclick="document.getElementById('file-chamados').click()">
+      <input type="file" id="file-chamados" accept=".csv">
+      📂 Clique ou arraste o CSV aqui
+      <div id="badge-chamados"></div>
+    </div>
+  </div>
+
+</div>
+
+<button id="btnEnviar" disabled onclick="enviarTudo()">⬆ Enviar e Atualizar Scores</button>
+
+<br><br>
+<div id="log"><span class="log-info">Aguardando arquivos...</span></div>
+
+<script>
+  const SUPABASE_URL = 'https://vnekkjdrlnbtmgzjdizh.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuZWtramRybG5idG1nempkaXpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMjA1MjAsImV4cCI6MjA5NDg5NjUyMH0.IFMgkoN20GzUUFfFzJ5vrlDzdHl85Tv1uWNn07W4hCM'
+  const TENANT_ID    = '00000000-0000-0000-0000-000000000001'
+
+  const dados = { clientes: null, faturas: null, chamados: null }
+
+  function log(msg, tipo = 'info') {
+    const el = document.getElementById('log')
+    el.innerHTML += `<div class="log-${tipo}">${msg}</div>`
+    el.scrollTop = el.scrollHeight
+  }
+
+  function checaBotao() {
+    const ok = dados.clientes && dados.faturas && dados.chamados
+    document.getElementById('btnEnviar').disabled = !ok
+  }
+
+  function setBadge(id, texto, ok) {
+    const el = document.getElementById('badge-' + id)
+    el.innerHTML = `<span class="badge ${ok ? 'ok' : 'err'}">${texto}</span>`
+    document.getElementById('drop-' + id).classList.toggle('loaded', ok)
+  }
+
+  function setupDrop(key) {
+    const drop = document.getElementById('drop-' + key)
+    const input = document.getElementById('file-' + key)
+
+    input.addEventListener('change', e => parseCSV(key, e.target.files[0]))
+
+    drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over') })
+    drop.addEventListener('dragleave', () => drop.classList.remove('over'))
+    drop.addEventListener('drop', e => {
+      e.preventDefault()
+      drop.classList.remove('over')
+      parseCSV(key, e.dataTransfer.files[0])
+    })
+  }
+
+  function parseCSV(key, file) {
+    if (!file) return
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete(result) {
+        if (result.errors.length) {
+          setBadge(key, '❌ Erro no CSV', false)
+          return
+        }
+        dados[key] = result.data
+        setBadge(key, `✅ ${result.data.length} registros`, true)
+        checaBotao()
+      }
+    })
+  }
+
+  async function upsert(tabela, rows) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${tabela}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(rows)
+    })
+    if (!res.ok) {
+      const err = await res.json()
+      throw new Error(err.message || res.statusText)
+    }
+    return rows.length
+  }
+
+  async function enviarTudo() {
+    document.getElementById('log').innerHTML = ''
+    document.getElementById('btnEnviar').disabled = true
+    log('🚀 Iniciando envio...', 'info')
+
+    try {
+      // Clientes
+      const clientes = dados.clientes.map(r => ({
+        id_interno_cliente: r.id_interno_cliente?.trim(),
+        tenant_id:          TENANT_ID,
+        nome:               r.nome?.trim(),
+        telefone:           r.telefone?.trim(),
+        tipo_contrato:      r.tipo_contrato?.trim(),
+        metodo_pagamento:   r.metodo_pagamento?.trim()
+      }))
+      const nc = await upsert('clientes', clientes)
+      log(`✅ Clientes: ${nc} registros enviados`, 'ok')
+
+      // Faturas
+      const faturas = dados.faturas.map(r => ({
+        id_interno_fatura:  r.id_interno_fatura?.trim(),
+        tenant_id:          TENANT_ID,
+        id_interno_cliente: r.id_interno_cliente?.trim(),
+        dias_atraso:        parseInt(r.dias_atraso) || 0,
+        valor:              parseFloat(r.valor)     || 0
+      }))
+      const nf = await upsert('faturas_atrasadas', faturas)
+      log(`✅ Faturas: ${nf} registros enviados`, 'ok')
+
+      // Chamados
+      const chamados = dados.chamados.map(r => ({
+        id_interno_chamado: r.id_interno_chamado?.trim(),
+        tenant_id:          TENANT_ID,
+        id_interno_cliente: r.id_interno_cliente?.trim(),
+        status:             r.status?.trim(),
+        tipo_ocorrencia:    r.tipo_ocorrencia?.trim()
+      }))
+      const nch = await upsert('chamados_suporte', chamados)
+      log(`✅ Chamados: ${nch} registros enviados`, 'ok')
+
+      log('', 'info')
+      log('🎯 Upload concluído! Vá ao Supabase → SQL Editor e rode:', 'info')
+      log('SELECT nome, score, classificacao_risco, motivos_risco FROM view_score_saude_clientes ORDER BY score ASC;', 'warn')
+
+    } catch(e) {
+      log(`❌ Erro: ${e.message}`, 'err')
+      log('Verifique se as colunas do CSV batem com os nomes obrigatórios.', 'warn')
+    }
+
+    document.getElementById('btnEnviar').disabled = false
+  }
+
+  setupDrop('clientes')
+  setupDrop('faturas')
+  setupDrop('chamados')
+</script>
+</body>
+</html>
