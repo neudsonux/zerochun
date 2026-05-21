@@ -285,7 +285,8 @@
   </div>
   <div class="header-right">
     <div class="ai-pill"><div class="pulse"></div>Agente IA ativo</div>
-    <div class="tenant-pill"><div class="tenant-avatar">B</div>FibraMax · Beatriz</div>
+    <div class="tenant-pill"><div class="tenant-avatar">P</div><span id="tenant-name">Carregando...</span></div>
+    <button onclick="fazerLogout()" style="padding:5px 12px;border:1px solid var(--border);border-radius:var(--r-full);background:transparent;font-size:12px;color:var(--text-4);cursor:pointer;font-family:inherit;" onmouseover="this.style.color='#b42318'" onmouseout="this.style.color='var(--text-4)'">Sair</button>
   </div>
 </header>
 
@@ -427,9 +428,38 @@
 
 <script>
   const SUPABASE_URL = 'https://vnekkjdrlnbtmgzjdizh.supabase.co'
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuZWtramRybG5idG1nempkaXpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMjA1MjAsImV4cCI6MjA5NDg5NjUyMH0.IFMgkoN20GzUUFfFzJ5vrlDzdHl85Tv1uWNn07W4hCM'
+  const ANON_KEY     = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZuZWtramRybG5idG1nempkaXpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMjA1MjAsImV4cCI6MjA5NDg5NjUyMH0.IFMgkoN20GzUUFfFzJ5vrlDzdHl85Tv1uWNn07W4hCM'
   const EDGE_URL     = 'https://vnekkjdrlnbtmgzjdizh.supabase.co/functions/v1/analisar-cliente'
-  const TENANT_ID    = '00000000-0000-0000-0000-000000000001'
+
+  let SUPABASE_KEY = localStorage.getItem('zc_token') || ANON_KEY
+  let TENANT_ID    = null
+  let nomeProvedor = 'Provedor'
+  let nomeUsuario  = 'Usuário'
+
+  async function iniciarSessao() {
+    const token = localStorage.getItem('zc_token')
+    if (!token) { window.location.href = 'login.html'; return false }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles?select=tenant_id,nome,tenants(nome_provedor)`, {
+      headers: { apikey: ANON_KEY, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    })
+    if (res.status === 401) { fazerLogout(); return false }
+    const data = await res.json()
+    if (!data.length) { fazerLogout(); return false }
+    TENANT_ID    = data[0].tenant_id
+    nomeUsuario  = data[0].nome || 'Usuário'
+    nomeProvedor = data[0].tenants?.nome_provedor || 'Provedor'
+    SUPABASE_KEY = token
+    const el = document.getElementById('tenant-name')
+    if (el) el.textContent = `${nomeProvedor} · ${nomeUsuario.split(' ')[0]}`
+    return true
+  }
+
+  function fazerLogout() {
+    localStorage.removeItem('zc_token')
+    localStorage.removeItem('zc_refresh')
+    localStorage.removeItem('zc_user')
+    window.location.href = 'login.html'
+  }
 
   let todosClientes    = []
   let abordagensMap    = {}
@@ -444,10 +474,10 @@
   const fmtNum  = v => Number(v).toLocaleString('pt-BR')
   const cor     = s => s >= 100 ? '#6d28d9' : s < 30 ? '#b42318' : s < 50 ? '#b54708' : '#027a48'
   const corFill = s => s >= 100 ? '#7c3aed' : s < 30 ? '#ef4444' : s < 50 ? '#f97316' : '#16a34a'
-  const H       = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' }
-  const get     = p => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { headers: H }).then(r => r.json())
-  const post    = (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'POST', headers:{...H,Prefer:'return=representation'}, body:JSON.stringify(b) }).then(r => r.json())
-  const patch   = (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'PATCH', headers:H, body:JSON.stringify(b) })
+  const H       = () => ({ apikey: ANON_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' })
+  const get     = p => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { headers: H() }).then(r => r.json())
+  const post    = (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'POST', headers:{...H(),Prefer:'return=representation'}, body:JSON.stringify(b) }).then(r => r.json())
+  const patch   = (p, b) => fetch(`${SUPABASE_URL}/rest/v1/${p}`, { method:'PATCH', headers:H(), body:JSON.stringify(b) })
 
   // ── NAV ──
   function trocarAba(aba, btn) {
@@ -513,6 +543,8 @@
     document.getElementById("conteudo").innerHTML = `<div class="state-box"><div class="spinner-lg"></div><p>Carregando clientes...</p><span>Conectando ao Supabase</span></div>`
     analisesCriticos = {}
     try {
+      const ok = await iniciarSessao()
+      if (!ok) return
       await carregarClientes()
       await carregarROI()
       renderTabela()
