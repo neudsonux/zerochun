@@ -135,6 +135,7 @@
         <span class="col-tag">telefone</span>
         <span class="col-tag">tipo_contrato</span>
         <span class="col-tag">metodo_pagamento</span>
+        <span class="col-tag">ticket_mensal</span>
       </div>
       <div class="drop-zone" id="drop-clientes" onclick="document.getElementById('file-clientes').click()">
         <input type="file" id="file-clientes" accept=".csv">
@@ -235,7 +236,8 @@
   }
 
   function checaBotao() {
-    document.getElementById('btnEnviar').disabled = !(dados.clientes && dados.faturas && dados.chamados)
+    const algum = dados.clientes || dados.faturas || dados.chamados
+    document.getElementById("btnEnviar").disabled = !algum
   }
 
   function setBadge(id, texto, ok) {
@@ -298,30 +300,37 @@
         if (!TENANT_ID) throw new Error('Sessão expirada. Faça login novamente.')
       }
 
-      const clientes = dados.clientes.map(r => ({
-        id_interno_cliente: r.id_interno_cliente?.trim(),
-        tenant_id: TENANT_ID, nome: r.nome?.trim(),
-        telefone: r.telefone?.trim(), tipo_contrato: r.tipo_contrato?.trim(),
-        metodo_pagamento: r.metodo_pagamento?.trim()
-      }))
-      await upsert('clientes', clientes)
-      log(`✅ ${clientes.length} clientes enviados com sucesso`, 'ok')
+      if (dados.clientes) {
+        const clientes = dados.clientes.map(r => ({
+          id_interno_cliente: r.id_interno_cliente?.trim(),
+          tenant_id: TENANT_ID, nome: r.nome?.trim(),
+          telefone: r.telefone?.trim(), tipo_contrato: r.tipo_contrato?.trim(),
+          metodo_pagamento: r.metodo_pagamento?.trim(),
+          ticket_mensal: parseFloat(r.ticket_mensal) || 0
+        }))
+        await upsert("clientes", clientes)
+        log(`✅ ${clientes.length} clientes enviados com sucesso`, "ok")
+      } else { log("⏭ Clientes não carregados — ignorado", "warn") }
 
-      const faturas = dados.faturas.map(r => ({
-        id_interno_fatura: r.id_interno_fatura?.trim(),
-        tenant_id: TENANT_ID, id_interno_cliente: r.id_interno_cliente?.trim(),
-        dias_atraso: parseInt(r.dias_atraso) || 0, valor: parseFloat(r.valor) || 0
-      }))
-      await upsert('faturas_atrasadas', faturas)
-      log(`✅ ${faturas.length} faturas enviadas com sucesso`, 'ok')
+      if (dados.faturas) {
+        const faturas = dados.faturas.map(r => ({
+          id_interno_fatura: r.id_interno_fatura?.trim(),
+          tenant_id: TENANT_ID, id_interno_cliente: r.id_interno_cliente?.trim(),
+          dias_atraso: parseInt(r.dias_atraso) || 0, valor: parseFloat(r.valor) || 0
+        }))
+        await upsert("faturas_atrasadas", faturas)
+        log(`✅ ${faturas.length} faturas enviadas com sucesso`, "ok")
+      } else { log("⏭ Faturas não carregadas — ignorado", "warn") }
 
-      const chamados = dados.chamados.map(r => ({
-        id_interno_chamado: r.id_interno_chamado?.trim(),
-        tenant_id: TENANT_ID, id_interno_cliente: r.id_interno_cliente?.trim(),
-        status: r.status?.trim(), tipo_ocorrencia: r.tipo_ocorrencia?.trim()
-      }))
-      await upsert('chamados_suporte', chamados)
-      log(`✅ ${chamados.length} chamados enviados com sucesso`, 'ok')
+      if (dados.chamados) {
+        const chamados = dados.chamados.map(r => ({
+          id_interno_chamado: r.id_interno_chamado?.trim(),
+          tenant_id: TENANT_ID, id_interno_cliente: r.id_interno_cliente?.trim(),
+          status: r.status?.trim(), tipo_ocorrencia: r.tipo_ocorrencia?.trim()
+        }))
+        await upsert("chamados_suporte", chamados)
+        log(`✅ ${chamados.length} chamados enviados com sucesso`, "ok")
+      } else { log("⏭ Chamados não carregados — ignorado", "warn") }
 
       log('🎯 Upload concluído! Os scores foram atualizados.', 'info')
       log('Volte ao dashboard para ver os resultados.', 'warn')
