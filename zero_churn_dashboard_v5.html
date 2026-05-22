@@ -547,7 +547,7 @@
         diagnostico: `${cliente.nome.split(' ')[0]} apresenta múltiplos fatores de risco que requerem atenção imediata.`,
         acao_recomendada: 'Entrar em contato demonstrando cuidado com a experiência do cliente.',
         urgencia: 'alta', justificativa_urgencia: 'Score crítico.',
-        mensagem_whatsapp: `Olá ${cliente.nome.split(' ')[0]}! Aqui é da FibraMax. Passando para saber como está sua experiência com a internet. Posso te ajudar em algo?`
+        mensagem_whatsapp: `Olá ${cliente.nome.split(' ')[0]}! Aqui é da ${nomeProvedor}. Passando para saber como está sua experiência com a internet. Posso te ajudar em algo?`
       }
     }
   }
@@ -974,10 +974,10 @@
 
   function gerarMensagem(c) {
     const nome = c.nome.split(' ')[0]
-    if (c.osAberta && c.maxDias > 0) return `Olá ${nome}! Aqui é da FibraMax. Identificamos uma instabilidade na sua conexão e gostaríamos de resolver isso agora mesmo. Tem um minutinho para conversarmos?`
-    if (c.osAberta)  return `Olá ${nome}! Aqui é da FibraMax. Notamos que você registrou uma ocorrência técnica e queremos garantir que está tudo resolvido. Está tudo ok com sua internet?`
-    if (c.maxDias > 0) return `Olá ${nome}! Aqui é da FibraMax. Passando para oferecer uma forma mais prática de manter sua conta em dia. Posso te ajudar agora?`
-    return `Olá ${nome}! Aqui é da FibraMax. Passando para saber como está sua experiência com a internet. Posso te ajudar em algo?`
+    if (c.osAberta && c.maxDias > 0) return `Olá ${nome}! Aqui é da ${nomeProvedor}. Identificamos uma instabilidade na sua conexão e gostaríamos de resolver isso agora mesmo. Tem um minutinho para conversarmos?`
+    if (c.osAberta)  return `Olá ${nome}! Aqui é da ${nomeProvedor}. Notamos que você registrou uma ocorrência técnica e queremos garantir que está tudo resolvido. Está tudo ok com sua internet?`
+    if (c.maxDias > 0) return `Olá ${nome}! Aqui é da ${nomeProvedor}. Passando para oferecer uma forma mais prática de manter sua conta em dia. Posso te ajudar agora?`
+    return `Olá ${nome}! Aqui é da ${nomeProvedor}. Passando para saber como está sua experiência com a internet. Posso te ajudar em algo?`
   }
 
   // Aguarda DOM completo antes de carregar
