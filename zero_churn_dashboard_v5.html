@@ -915,15 +915,16 @@
   }
 
   function renderPainel(c, analise) {
-    const urgEmoji = { alta:'🚨', media:'⚠️', baixa:'✅' }
-    const urgLabel = { alta:'Urgência alta', media:'Urgência média', baixa:'Urgência baixa' }
-    document.getElementById('painel-body').innerHTML = `
-      <div class="urgency-bar ${analise.urgencia||'alta'}">${urgEmoji[analise.urgencia]||'🚨'} ${urgLabel[analise.urgencia]||'Urgência alta'} — ${analise.justificativa_urgencia}</div>
+    const urgEmoji = { alta:"🚨", media:"⚠️", baixa:"✅" }
+    const urgLabel = { alta:"Urgência alta", media:"Urgência média", baixa:"Urgência baixa" }
+    const msgCorrigida = (analise.mensagem_whatsapp || "").replace(/Aqui é da [^,.!?]+/gi, `Aqui é da ${nomeProvedor}`)
+    document.getElementById("painel-body").innerHTML = `
+      <div class="urgency-bar ${analise.urgencia||"alta"}">${urgEmoji[analise.urgencia]||"🚨"} ${urgLabel[analise.urgencia]||"Urgência alta"} — ${analise.justificativa_urgencia}</div>
       <div class="panel-section"><div class="panel-section-label">✦ Diagnóstico da IA</div><p>${analise.diagnostico}</p></div>
       <div class="panel-section"><div class="panel-section-label">🎯 Ação recomendada</div><p class="action-text">${analise.acao_recomendada}</p></div>
-      <div class="msg-area"><div class="msg-area-label">💬 Mensagem WhatsApp — edite se necessário</div><textarea id="msg-wa">${analise.mensagem_whatsapp}</textarea></div>`
-    const tel = c.telefone.replace(/\D/g, '')
-    document.getElementById('btn-aprovar-link').href = `https://wa.me/55${tel}?text=${encodeURIComponent(analise.mensagem_whatsapp)}`
+      <div class="msg-area"><div class="msg-area-label">💬 Mensagem WhatsApp — edite se necessário</div><textarea id="msg-wa">${msgCorrigida}</textarea></div>`
+    const tel = c.telefone.replace(/\D/g, "")
+    document.getElementById("btn-aprovar-link").href = `https://wa.me/55${tel}?text=${encodeURIComponent(msgCorrigida)}`
     document.getElementById('painel-footer').style.display = 'flex'
     setTimeout(() => {
       const ta = document.getElementById('msg-wa')
