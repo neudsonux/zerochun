@@ -71,19 +71,34 @@
     .page-title h2 { font-size: 20px; font-weight: 600; color: var(--text-1); letter-spacing: -.02em; }
     .page-title p  { font-size: 14px; color: var(--text-4); margin-top: 2px; }
 
-    /* METRICS GRID */
-    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
-    .metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow-xs); transition: box-shadow .15s, transform .15s; }
+    /* METRICS — grupos semânticos */
+    .metrics-section { margin-bottom: 24px; }
+    .metrics-section-label { font-size: 11px; font-weight: 600; color: var(--text-5); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .metrics-section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+    .metrics-grid { display: grid; gap: 12px; }
+    .metrics-grid.g3 { grid-template-columns: repeat(3, 1fr); }
+    .metrics-grid.g4 { grid-template-columns: repeat(4, 1fr); }
+    .metrics-grid.g3-lg { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px) { .metrics-grid.g3,.metrics-grid.g4,.metrics-grid.g3-lg { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 560px) { .metrics-grid.g3,.metrics-grid.g4,.metrics-grid.g3-lg { grid-template-columns: 1fr; } }
+    .metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 22px; box-shadow: var(--shadow-xs); transition: box-shadow .15s, transform .15s; position: relative; overflow: hidden; }
     .metric-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
-    .metric-label { font-size: 12px; font-weight: 500; color: var(--text-4); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; }
-    .metric-value { font-size: 24px; font-weight: 700; color: var(--text-1); letter-spacing: -.02em; line-height: 1; }
+    .metric-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+    .metric-card.c-green::before  { background: var(--green-700); }
+    .metric-card.c-blue::before   { background: var(--brand); }
+    .metric-card.c-red::before    { background: var(--red-700); }
+    .metric-card.c-amber::before  { background: var(--amber-700); }
+    .metric-card.c-orange::before { background: #c4410c; }
+    .metric-card.c-purple::before { background: var(--purple-700); }
+    .metric-label { font-size: 11px; font-weight: 600; color: var(--text-4); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+    .metric-value { font-size: 28px; font-weight: 700; color: var(--text-1); letter-spacing: -.03em; line-height: 1; }
     .metric-card.c-red    .metric-value { color: var(--red-700); }
     .metric-card.c-amber  .metric-value { color: var(--amber-700); }
     .metric-card.c-green  .metric-value { color: var(--green-700); }
     .metric-card.c-blue   .metric-value { color: var(--brand); }
     .metric-card.c-orange .metric-value { color: #c4410c; }
     .metric-card.c-purple .metric-value { color: var(--purple-700); }
-    .metric-sub { font-size: 12px; color: var(--text-5); margin-top: 4px; }
+    .metric-sub { font-size: 12px; color: var(--text-5); margin-top: 5px; }
     .metric-delta { font-size: 12px; margin-top: 6px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
     .metric-delta.up   { color: var(--green-700); }
     .metric-delta.down { color: var(--red-700); }
@@ -315,17 +330,35 @@
       <p>Clientes em risco identificados automaticamente. Críticos analisados pela IA.</p>
     </div>
 
-    <div class="metrics-grid">
-      <div class="metric-card c-green"><div class="metric-label">💰 MRR Salvo</div><div class="metric-value" id="roi-mrr">R$ —</div><div class="metric-sub">receita protegida</div></div>
-      <div class="metric-card c-blue"><div class="metric-label">📈 ARR Projetado</div><div class="metric-value" id="roi-arr">R$ —</div><div class="metric-sub">anualizado</div></div>
-      <div class="metric-card c-blue"><div class="metric-label">🎯 Taxa Retenção</div><div class="metric-value" id="roi-taxa">— %</div><div class="metric-sub">das abordagens</div></div>
-      <div class="metric-card c-green"><div class="metric-label">✅ Retidos</div><div class="metric-value" id="roi-retidos">—</div><div class="metric-sub">clientes salvos</div></div>
-      <div class="metric-card c-amber"><div class="metric-label">⏳ Pendentes</div><div class="metric-value" id="roi-pendentes">—</div><div class="metric-sub">aguardando desfecho</div></div>
-      <div class="metric-card c-orange"><div class="metric-label">🔥 MRR em Risco</div><div class="metric-value" id="roi-receita-risco">R$ —</div><div class="metric-sub">críticos + alerta</div></div>
-      <div class="metric-card c-red"><div class="metric-label">🚨 Críticos</div><div class="metric-value" id="cnt-critico">—</div><div class="metric-sub">score abaixo de 30</div></div>
-      <div class="metric-card c-amber"><div class="metric-label">⚠️ Em Alerta</div><div class="metric-value" id="cnt-alerta">—</div><div class="metric-sub">score 30 a 49</div></div>
-      <div class="metric-card c-green"><div class="metric-label">✅ Saudáveis</div><div class="metric-value" id="cnt-saudavel">—</div><div class="metric-sub">score acima de 50</div></div>
-      <div class="metric-card c-purple"><div class="metric-label">🛡️ Retidos semana</div><div class="metric-value" id="cnt-retido-semana">—</div><div class="metric-sub">recuperados esta semana</div></div>
+    <!-- GRUPO 1: RESULTADO DA SEMANA -->
+    <div class="metrics-section">
+      <div class="metrics-section-label">Resultado da semana</div>
+      <div class="metrics-grid g4">
+        <div class="metric-card c-green"><div class="metric-label">💰 MRR Salvo</div><div class="metric-value" id="roi-mrr">R$ —</div><div class="metric-sub">receita protegida na semana</div></div>
+        <div class="metric-card c-blue"><div class="metric-label">📈 ARR Projetado</div><div class="metric-value" id="roi-arr">R$ —</div><div class="metric-sub">anualizado</div></div>
+        <div class="metric-card c-blue"><div class="metric-label">🎯 Taxa de Retenção</div><div class="metric-value" id="roi-taxa">— %</div><div class="metric-sub">das abordagens com desfecho</div></div>
+        <div class="metric-card c-green"><div class="metric-label">✅ Retidos esta semana</div><div class="metric-value" id="roi-retidos">—</div><div class="metric-sub">clientes salvos</div></div>
+      </div>
+    </div>
+
+    <!-- GRUPO 2: RISCO ATUAL -->
+    <div class="metrics-section">
+      <div class="metrics-section-label">Risco atual — requer ação</div>
+      <div class="metrics-grid g3">
+        <div class="metric-card c-orange"><div class="metric-label">🔥 MRR em Risco</div><div class="metric-value" id="roi-receita-risco">R$ —</div><div class="metric-sub">receita exposta ao churn</div></div>
+        <div class="metric-card c-red"><div class="metric-label">🚨 Críticos</div><div class="metric-value" id="cnt-critico">—</div><div class="metric-sub">score abaixo de 30 · ação imediata</div></div>
+        <div class="metric-card c-amber"><div class="metric-label">⚠️ Em Alerta</div><div class="metric-value" id="cnt-alerta">—</div><div class="metric-sub">score 30 a 49 · monitorar</div></div>
+      </div>
+    </div>
+
+    <!-- GRUPO 3: BASE E PENDÊNCIAS -->
+    <div class="metrics-section">
+      <div class="metrics-section-label">Base e pendências</div>
+      <div class="metrics-grid g3">
+        <div class="metric-card c-amber"><div class="metric-label">⏳ Pendentes</div><div class="metric-value" id="roi-pendentes">—</div><div class="metric-sub">abordagens sem desfecho</div></div>
+        <div class="metric-card c-purple"><div class="metric-label">🛡️ Recuperados</div><div class="metric-value" id="cnt-retido-semana">—</div><div class="metric-sub">retidos esta semana</div></div>
+        <div class="metric-card c-green"><div class="metric-label">✅ Saudáveis</div><div class="metric-value" id="cnt-saudavel">—</div><div class="metric-sub">score acima de 50</div></div>
+      </div>
     </div>
 
     <div class="table-card">
